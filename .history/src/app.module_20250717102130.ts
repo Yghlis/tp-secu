@@ -1,28 +1,19 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'path';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MongoService } from './mongo.service';
+import { PrismaService } from './prisma.service';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { User, UserSchema } from './schemas/user.schema';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://localhost:27017/tp_secu', {
-      retryAttempts: 5,
-      retryDelay: 1000,
-    }),
-    MongooseModule.forFeature([
-      { name: User.name, schema: UserSchema }
-    ]),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
       serveRoot: '',
@@ -33,7 +24,7 @@ import { User, UserSchema } from './schemas/user.schema';
     }),
   ],
   controllers: [AppController, UsersController],
-  providers: [AppService, MongoService, UsersService],
-  exports: [MongoService],
+  providers: [AppService, PrismaService, UsersService],
+  exports: [PrismaService],
 })
 export class AppModule {}

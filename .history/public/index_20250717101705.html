@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP Sécurité - Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-shield-alt"></i> TP Sécurité Dashboard</h1>
+            <p class="subtitle">Interface de gestion sécurisée</p>
+        </header>
+
+        <div class="dashboard">
+            <!-- API Status Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-server"></i> Statut API</h2>
+                </div>
+                <div class="card-content">
+                    <div class="status-indicator" id="api-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Vérification...</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="checkApiStatus()">
+                        <i class="fas fa-sync-alt"></i> Vérifier
+                    </button>
+                </div>
+            </div>
+
+            <!-- Users Management Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-users"></i> Gestion Utilisateurs</h2>
+                </div>
+                <div class="card-content">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" placeholder="user@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe:</label>
+                        <input type="password" id="password" placeholder="••••••••">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn btn-success" onclick="createUser()">
+                            <i class="fas fa-user-plus"></i> Créer
+                        </button>
+                        <button class="btn btn-info" onclick="getUsers()">
+                            <i class="fas fa-list"></i> Lister
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Documentation Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-book"></i> Documentation</h2>
+                </div>
+                <div class="card-content">
+                    <p>Accédez à la documentation interactive de l'API</p>
+                    <a href="/api" target="_blank" class="btn btn-secondary">
+                        <i class="fas fa-external-link-alt"></i> Swagger UI
+                    </a>
+                </div>
+            </div>
+
+            <!-- Security Info Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-lock"></i> Sécurité</h2>
+                </div>
+                <div class="card-content">
+                    <div class="security-info">
+                        <div class="security-item">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span>CORS activé</span>
+                        </div>
+                        <div class="security-item">
+                            <i class="fas fa-database text-info"></i>
+                            <span>Base PostgreSQL</span>
+                        </div>
+                        <div class="security-item" id="https-status">
+                            <i class="fas fa-times-circle text-danger"></i>
+                            <span>HTTPS non configuré</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results" id="results" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-terminal"></i> Résultats</h2>
+                    <button class="btn btn-close" onclick="hideResults()">×</button>
+                </div>
+                <div class="card-content">
+                    <pre id="results-content"></pre>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2025 TP Sécurité - Développé avec <i class="fas fa-heart text-danger"></i></p>
+        </footer>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html> 

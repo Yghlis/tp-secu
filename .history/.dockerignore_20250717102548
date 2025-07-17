@@ -1,0 +1,53 @@
+# Dependencies
+node_modules
+npm-debug.log
+
+# Build output
+dist
+build
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Logs
+logs
+*.log
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+
+# Testing
+coverage
+*.test.js
+*.spec.js
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+docs
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# SSL/HTTPS
+data
+nginx
+init-letsencrypt.sh
+
+# Misc
+.nyc_output
+.cache 

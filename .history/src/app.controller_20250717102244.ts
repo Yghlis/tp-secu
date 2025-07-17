@@ -17,7 +17,7 @@ export class AppController {
   @Get('api/health')
   @ApiTags('health')
   @ApiOperation({ summary: 'Vérifier le statut de l\'API' })
-  async getHello(): Promise<string> {
+  getHello(): string {
     return this.appService.getHello();
   }
 }

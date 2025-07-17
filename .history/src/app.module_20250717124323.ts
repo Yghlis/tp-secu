@@ -10,7 +10,6 @@ import { MongoService } from './mongo.service';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { SeedService } from './seed.service';
-import { SeedController } from './seed.controller';
 import { User, UserSchema } from './schemas/user.schema';
 import { Film, FilmSchema } from './schemas/film.schema';
 
@@ -36,8 +35,8 @@ import { Film, FilmSchema } from './schemas/film.schema';
       },
     }),
   ],
-  controllers: [AppController, UsersController, SeedController],
-  providers: [AppService, MongoService, UsersService, SeedService],
+  controllers: [AppController, UsersController],
+  providers: [AppService, MongoService, UsersService],
   exports: [MongoService],
 })
 export class AppModule {}

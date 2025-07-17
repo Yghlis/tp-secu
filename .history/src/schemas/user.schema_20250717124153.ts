@@ -65,6 +65,9 @@ export class User {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
+// Index pour améliorer les performances
+UserSchema.index({ email: 1 }, { unique: true });
+
 // Transformer pour retourner id au lieu de _id
 UserSchema.set('toJSON', {
   transform: function(doc: any, ret: any) {

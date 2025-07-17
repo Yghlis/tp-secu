@@ -36,7 +36,7 @@ import { Film, FilmSchema } from './schemas/film.schema';
       },
     }),
   ],
-  controllers: [AppController, UsersController, SeedController],
+  controllers: [AppController, UsersController],
   providers: [AppService, MongoService, UsersService, SeedService],
   exports: [MongoService],
 })

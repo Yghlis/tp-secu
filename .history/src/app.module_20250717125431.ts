@@ -28,8 +28,7 @@ import { Wishlist, WishlistSchema } from './schemas/wishlist.schema';
     }),
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
-      { name: Film.name, schema: FilmSchema },
-      { name: Wishlist.name, schema: WishlistSchema }
+      { name: Film.name, schema: FilmSchema }
     ]),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
@@ -39,8 +38,6 @@ import { Wishlist, WishlistSchema } from './schemas/wishlist.schema';
         index: 'index.html',
       },
     }),
-    AuthModule,
-    FilmsModule,
   ],
   controllers: [AppController, UsersController, SeedController],
   providers: [AppService, MongoService, UsersService, SeedService],

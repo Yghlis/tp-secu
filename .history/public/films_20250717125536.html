@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Films - TP Sécurité</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-shield-alt"></i> TP Sécurité
+        </div>
+        <div class="nav-menu">
+            <a href="/dashboard.html" class="nav-link">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a href="/films.html" class="nav-link active">
+                <i class="fas fa-film"></i> Films
+            </a>
+            <a href="#" onclick="showWishlist()" class="nav-link">
+                <i class="fas fa-heart"></i> Ma Wishlist <span id="wishlistCount" class="badge">0</span>
+            </a>
+            <a href="#" onclick="logout()" class="nav-link logout">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
+        </div>
+        <div class="user-info">
+            <span id="userEmail">Chargement...</span>
+            <span id="userRole" class="role-badge">-</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- En-tête Films -->
+        <div class="page-header">
+            <h1><i class="fas fa-film"></i> Catalogue de Films</h1>
+            <p>Découvrez notre collection et créez votre wishlist personnalisée</p>
+        </div>
+
+        <!-- Filtres -->
+        <div class="filters-section">
+            <div class="filters">
+                <select id="genreFilter" onchange="filterFilms()">
+                    <option value="">Tous les genres</option>
+                    <option value="Action">Action</option>
+                    <option value="Aventure">Aventure</option>
+                    <option value="Comédie">Comédie</option>
+                    <option value="Drame">Drame</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Horreur">Horreur</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Science-Fiction">Science-Fiction</option>
+                    <option value="Thriller">Thriller</option>
+                    <option value="Animation">Animation</option>
+                </select>
+
+                <input type="range" id="ratingFilter" min="0" max="10" step="0.1" value="0" onchange="filterFilms()">
+                <label for="ratingFilter">Note minimum: <span id="ratingValue">0</span>/10</label>
+
+                <input type="text" id="searchFilter" placeholder="Rechercher un film..." onkeyup="filterFilms()">
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner fa-spin"></i> Chargement des films...
+        </div>
+
+        <!-- Liste des Films -->
+        <div id="filmsGrid" class="films-grid">
+            <!-- Films seront ajoutés ici par JavaScript -->
+        </div>
+
+        <!-- Wishlist Modal -->
+        <div id="wishlistModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-heart"></i> Ma Wishlist</h2>
+                    <span class="close" onclick="closeWishlistModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div id="wishlistContent">
+                        <!-- Contenu de la wishlist -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notifications" class="notifications"></div>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/films.js"></script>
+</body>
+</html> 

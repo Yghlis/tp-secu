@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - TP Sécurité</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1><i class="fas fa-shield-alt"></i> TP Sécurité</h1>
+                <p>Connectez-vous pour accéder au dashboard</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> Email
+                    </label>
+                    <input type="email" id="email" required placeholder="exemple@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Mot de passe
+                    </label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Se connecter
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <h3>📋 Comptes de test disponibles</h3>
+                <div class="test-accounts">
+                    <div class="account-card" onclick="fillLogin('admin@test.com', 'admin123')">
+                        <div class="account-role admin">👑 Admin</div>
+                        <div class="account-details">
+                            <strong>admin@test.com</strong>
+                            <small>admin123</small>
+                        </div>
+                    </div>
+                    
+                    <div class="account-card" onclick="fillLogin('user@test.com', 'user123')">
+                        <div class="account-role user">👤 User</div>
+                        <div class="account-details">
+                            <strong>user@test.com</strong>
+                            <small>user123</small>
+                        </div>
+                    </div>
+                    
+                    <div class="account-card" onclick="fillLogin('moderator@test.com', 'moderator123')">
+                        <div class="account-role moderator">🛡️ Moderator</div>
+                        <div class="account-details">
+                            <strong>moderator@test.com</strong>
+                            <small>moderator123</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notifications" class="notifications"></div>
+
+    <script src="/js/auth.js"></script>
+</body>
+</html> 
